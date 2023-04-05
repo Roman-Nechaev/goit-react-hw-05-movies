@@ -5,8 +5,9 @@ import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 const MovieDetails = () => {
   const [items, setItems] = useState([]);
   const location = useLocation();
+  console.log(location);
 
-  // const beckLinkLjcationRef = useRef(location.state?.from ?? '/dogs');
+  const beckLinkLjcationRef = useRef(location.state?.from ?? '/movies');
   const params = useParams();
 
   useEffect(() => {
@@ -33,6 +34,7 @@ const MovieDetails = () => {
   return (
     <>
       <h1>DogsDetails: {params.moviesId}</h1>
+      <Link to={beckLinkLjcationRef.current}>Назад к странице коллекции</Link>
 
       <div>
         <h2>{items.title}</h2>
@@ -40,13 +42,13 @@ const MovieDetails = () => {
           src={`https://image.tmdb.org/t/p/w500${items.poster_path}`}
           alt=""
         />
+        <p>User Scope: {voteAverage}%</p>
         <h2>Overview</h2>
-        <p>{voteAverage}%</p>
+
         <h3>Genres</h3>
         {genres && genres.map(({ id, name }) => <span key={id}>{name} </span>)}
       </div>
 
-      {/* <Link to={beckLinkLjcationRef.current}>Назад к странице коллекции</Link> */}
       {/* <ul>
         <li>
           <Link to="gallery">Галерея</Link>
