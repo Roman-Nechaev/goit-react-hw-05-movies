@@ -11,7 +11,7 @@ const SearchMoviesItems = ({ queryResultItems }) => {
       <ul>
         {queryResultItems.map(item => (
           <li key={item.id}>
-            <Link to="Movies">{item.title}</Link>
+            <Link to="movies">{item.title}</Link>
           </li>
         ))}
       </ul>

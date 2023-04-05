@@ -12,7 +12,7 @@ const Movies = () => {
     if (text.trim() === '') {
       console.log('поле ввода не должно быть пустым ');
     }
-    console.log(text);
+
     setState(text);
     actions.setSubmitting(false);
   };
@@ -31,7 +31,7 @@ const Movies = () => {
     };
     fetchData();
   }, [state]);
-  console.log(queryResult);
+
   return (
     <div>
       <Formik initialValues={{ text: '' }} onSubmit={handleSubmit}>
