@@ -7,9 +7,10 @@ export const ContainerMain = styled.div`
 `;
 
 export const Container = styled.div`
-  max-width: 960px;
+  max-width: 1024px;
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 20px;
+  background-color: #042541;
 `;
 
 export const Header = styled.header`
@@ -19,23 +20,38 @@ export const Header = styled.header`
   gap: 12px;
   padding: 8px 0;
   margin-bottom: 16px;
-  border-bottom: 1px solid black;
+  height: 64px;
+  /* border-bottom: 1px solid black; */
 `;
 
-// export const Logo = styled.p`
-//   font-weight: 700;
-//   margin: 0;
-// `;
+export const Logo = styled.p`
+  font-weight: 700;
+  margin: 0;
+  color: white;
+`;
 
 export const Link = styled(NavLink)`
   padding: 8px 16px;
   border-radius: 4px;
   text-decoration: none;
-  color: black;
+  color: white;
   font-weight: 500;
 
   &.active {
     color: white;
     background-color: orangered;
+  }
+`;
+
+export const LinkLogo = styled(NavLink)`
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  :hover,
+  :focus {
+    cursor: pointer;
   }
 `;

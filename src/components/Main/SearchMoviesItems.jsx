@@ -22,4 +22,3 @@ const SearchMoviesItems = ({ queryResultItems }) => {
 };
 
 export default SearchMoviesItems;
-//  id title
