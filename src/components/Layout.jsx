@@ -1,5 +1,5 @@
-import { Link, Outlet } from 'react-router-dom';
-import { Container, ContainerMain, Header } from './Layout.styled';
+import { Outlet } from 'react-router-dom';
+import { Container, ContainerMain, Header, Link } from './Layout.styled';
 
 const Layout = () => {
   return (

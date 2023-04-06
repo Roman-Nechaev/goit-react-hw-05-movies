@@ -1,17 +1,19 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const SearchMoviesItems = ({ queryResultItems }) => {
+  const location = useLocation();
   if (!queryResultItems) {
     return;
   }
-  console.log(queryResultItems);
+
   return (
     <div>
       <ul>
         {queryResultItems.map(item => (
           <li key={item.id}>
-            <Link to={`/movies/${item.id}`}>{item.title}</Link>
+            <Link to={`${item.id}`} state={{ from: location }}>
+              {item.title}
+            </Link>
           </li>
         ))}
       </ul>
