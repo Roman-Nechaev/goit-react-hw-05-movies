@@ -1,6 +1,17 @@
 import { useEffect, useState } from 'react';
 import { fetchRequestForActorsApi } from '../API/requestForActorsApi';
 import { useParams } from 'react-router-dom';
+import {
+  CastScrolled,
+  Character,
+  Img,
+  LiCard,
+  Name,
+  Ol,
+  TitleCast,
+} from './Cast.styled';
+
+import defaultPhoto from '../Img/no-photo.png';
 
 /*/ 
 
@@ -27,7 +38,7 @@ const Cast = () => {
       try {
         setIsLoading(true);
         const { cast } = await fetchRequestForActorsApi(moviesId);
-        console.log(cast);
+
         if (cast.length === 0) {
           console.log('Нет информации об актерах');
           setNoInformationCasts(true);
@@ -43,9 +54,17 @@ const Cast = () => {
     fetchData();
   }, [moviesId]);
 
+  const checkImg = img => {
+    console.log(img);
+    if (!img) {
+      return defaultPhoto;
+    }
+    return `https://image.tmdb.org/t/p/w500${img}`;
+  };
+
   return (
-    <>
-      <h3>Cтраница Cast ✅</h3>
+    <section>
+      <TitleCast> Billed Cast</TitleCast>
       {error && (
         <>
           <div>Ошибка error</div>
@@ -60,22 +79,22 @@ const Cast = () => {
       {noInformationCasts && <div>Нет информации об актерах</div>}
 
       {casts && (
-        <ul>
-          {casts.map(({ id, name, character, profile_path }) => {
-            return (
-              <li key={id}>
-                <p>Name: {name}</p>
-                <p>Character: {character}</p>
-                <img
-                  src={`https://image.tmdb.org/t/p/w500${profile_path}`}
-                  alt={name}
-                />
-              </li>
-            );
-          })}
-        </ul>
+        <CastScrolled>
+          <Ol>
+            {casts.map(({ id, name, character, profile_path }) => {
+              console.log(profile_path);
+              return (
+                <LiCard key={id}>
+                  <Img loading="lazy" src={checkImg(profile_path)} alt={name} />
+                  <Name>{name}</Name>
+                  <Character>{character}</Character>
+                </LiCard>
+              );
+            })}
+          </Ol>
+        </CastScrolled>
       )}
-    </>
+    </section>
   );
 };
 

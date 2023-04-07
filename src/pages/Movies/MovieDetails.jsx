@@ -1,7 +1,20 @@
 import { useRef, Suspense, useEffect, useState } from 'react';
-import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 
 import { fetchCompleteInformationAboutFilmApi } from 'components/API/completeInformationAboutFilmApi';
+import {
+  ContainerWrapperBgImage,
+  ContainerCard,
+  WrapperInfo,
+  SectionInfo,
+  ImgWrapper,
+  Img,
+  BgGradient,
+  LinkSt,
+  BackLink,
+  SectionLink,
+  UlLink,
+} from './MovieDetails.styles';
 
 /*/ 
 
@@ -44,52 +57,87 @@ const MovieDetails = () => {
     fetchData();
   }, [moviesId]);
 
-  const { title, poster_path, overview, genres, vote_average } = items;
+  const { title, poster_path, overview, genres, vote_average, backdrop_path } =
+    items;
   const voteAverage = Math.ceil(vote_average * 10);
   return (
-    <>
-      <Link to={beckLinkLocationRef.current}>Назад к странице коллекции</Link>
-      {error && (
-        <>
-          <div>Ошибка error</div>
-        </>
-      )}
-      {isLoading && (
-        <>
-          <div>Загружаем информацию о фильме isLoading</div>
-        </>
-      )}
+    <div>
+      <ContainerWrapperBgImage
+        img={`https://image.tmdb.org/t/p/original/${backdrop_path}`}
+      >
+        <BgGradient>
+          <BackLink to={beckLinkLocationRef.current}>
+            Назад к странице коллекции
+          </BackLink>
 
-      {!error && !isLoading && (
-        <>
-          <div>
-            <h1>{title}</h1>
-            <img
-              src={`https://image.tmdb.org/t/p/w500${poster_path}`}
-              alt={title}
-            />
-            <p>User Scope: {voteAverage}%</p>
-            <h2>Overview</h2>
-            <p>{overview}</p>
-            <h3>Genres</h3>
-            {genres &&
-              genres.map(({ id, name }) => <span key={id}>{name} </span>)}
-          </div>
+          {error && (
+            <>
+              <div>Ошибка error</div>
+            </>
+          )}
+          {isLoading && (
+            <>
+              <div>Загружаем информацию о фильме isLoading</div>
+            </>
+          )}
 
-          <ul>
+          {!error && !isLoading && (
+            <>
+              <ContainerCard>
+                <ImgWrapper>
+                  <Img
+                    loading="lazy"
+                    src={`https://image.tmdb.org/t/p/w500${poster_path}`}
+                    alt={title}
+                  />
+                </ImgWrapper>
+                <WrapperInfo>
+                  <SectionInfo>
+                    <h1>{title}</h1>
+
+                    <p>User Scope: {voteAverage}%</p>
+                    <h2>Overview</h2>
+                    <p>{overview}</p>
+                    <h3>Genres</h3>
+                    {genres &&
+                      genres.map(({ id, name }) => (
+                        <span key={id}>{name} </span>
+                      ))}
+                  </SectionInfo>
+                </WrapperInfo>
+              </ContainerCard>
+            </>
+          )}
+        </BgGradient>
+      </ContainerWrapperBgImage>
+      <SectionLink>
+        <nav>
+          <UlLink>
             <li>
-              <Link to="cast">Cast</Link>
+              <LinkSt to="cast">
+                <span>Cast</span>
+                <svg viewBox="0 0 13 10" height="10px" width="15px">
+                  <path d="M1,5 L11,5"></path>
+                  <polyline points="8 1 12 5 8 9"></polyline>
+                </svg>
+              </LinkSt>
             </li>
             <li>
-              <Link to="reviews">Reviews</Link>
+              <LinkSt to="reviews">
+                <span>Reviews</span>
+                <svg viewBox="0 0 13 10" height="10px" width="15px">
+                  <path d="M1,5 L11,5"></path>
+                  <polyline points="8 1 12 5 8 9"></polyline>
+                </svg>
+              </LinkSt>
             </li>
-          </ul>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Outlet />
-          </Suspense>
-        </>
-      )}
-    </>
+          </UlLink>
+        </nav>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Outlet />
+        </Suspense>
+      </SectionLink>
+    </div>
   );
 };
 

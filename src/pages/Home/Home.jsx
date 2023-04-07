@@ -14,6 +14,7 @@ import {
   OverviewCards,
   TitleWrapper,
   Release,
+  Container,
 } from './Home.styles';
 
 const Home = () => {
@@ -40,7 +41,7 @@ const Home = () => {
     fetchData();
   }, []);
 
-  function formatingOverview(text) {
+  function formattingOverview(text) {
     let newFormat = text;
     if (newFormat.length > 80) {
       newFormat = text.slice(0, 90) + '...';
@@ -49,7 +50,7 @@ const Home = () => {
   }
 
   return (
-    <div>
+    <Container>
       <Title>Trending today</Title>
       <ContentWrapper>
         {isLoading && (
@@ -71,6 +72,7 @@ const Home = () => {
                   <LinkSt to={`/movies/${id}`} state={{ from: location }}>
                     <ImgWrapper>
                       <ImgCards
+                        loading="lazy"
                         src={`https://image.tmdb.org/t/p/w500${poster_path}`}
                         alt={title}
                       />
@@ -79,7 +81,7 @@ const Home = () => {
                       <TitleCards>{title}</TitleCards>
                       <Release>{release_date}</Release>
                       <OverviewCards>
-                        {formatingOverview(overview)}
+                        {formattingOverview(overview)}
                       </OverviewCards>
                     </TitleWrapper>
                   </LinkSt>
@@ -89,7 +91,7 @@ const Home = () => {
           )}
         </Ul>
       </ContentWrapper>
-    </div>
+    </Container>
   );
 };
 

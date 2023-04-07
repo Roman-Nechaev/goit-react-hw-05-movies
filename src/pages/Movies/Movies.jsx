@@ -1,10 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { Formik, Form, Field } from 'formik';
+import { Formik } from 'formik';
 
 import { fetchSearchMovies } from 'components/API/searchMoviesApi';
 import SearchMoviesItems from '../../components/Main/SearchMoviesItems';
+import {
+  Button,
+  Container,
+  ContainerForm,
+  FormsSt,
+  Input,
+} from './Movies.styled';
 
 /*/ 
 
@@ -61,20 +68,20 @@ const Movies = () => {
 
   return (
     <div>
-      <Formik initialValues={{ values: queryMovies }} onSubmit={handleSubmit}>
-        <Form>
-          <Field
-            name="values"
-            type="text"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search"
-          />
-          <button type="submit">
-            <span>Search</span>
-          </button>
-        </Form>
-      </Formik>
+      <ContainerForm>
+        <Formik initialValues={{ values: queryMovies }} onSubmit={handleSubmit}>
+          <FormsSt>
+            <Button type="submit"></Button>
+            <Input
+              name="values"
+              type="text"
+              autoComplete="off"
+              autoFocus
+              placeholder="Find a movie"
+            />
+          </FormsSt>
+        </Formik>
+      </ContainerForm>
       {isLoading && (
         <>
           <div>Загружаем список фильмов isLoading</div>

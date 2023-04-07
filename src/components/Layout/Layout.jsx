@@ -1,43 +1,44 @@
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
+
 import {
   Container,
-  ContainerMain,
+  SectionHeader,
   Header,
   Link,
   LinkLogo,
   Logo,
+  SpanLogo,
+  SectionMain,
 } from './Layout.styled';
+import LogoIcons from '../Icons/pngegg.png';
 
 const Layout = () => {
   return (
-    <>
-      <Container>
+    <Container>
+      <SectionHeader>
         <Header>
           <Logo>
             <LinkLogo to="/">
-              <span role="img" aria-label="computer icon">
-                🎥
-              </span>
-              FT
+              <SpanLogo src={LogoIcons} alt="Logo Icons" />
             </LinkLogo>
           </Logo>
           <nav>
             <Link to="/">Home</Link>
             <Link to="movies">Movies</Link>
           </nav>
-          <>
-            <Link to="movies">Long in</Link>
-          </>
+          {/* <>
+            <Link to="/">Sign in</Link>
+          </> */}
         </Header>
-      </Container>
-      <main>
+      </SectionHeader>
+      <SectionMain>
         <Suspense fallback={<div>Loading...</div>}>
           <Outlet />
         </Suspense>
-      </main>
+      </SectionMain>
       <footer></footer>
-    </>
+    </Container>
   );
 };
 
