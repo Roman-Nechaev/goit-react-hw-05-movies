@@ -55,7 +55,6 @@ const Cast = () => {
   }, [moviesId]);
 
   const checkImg = img => {
-    console.log(img);
     if (!img) {
       return defaultPhoto;
     }
@@ -82,7 +81,6 @@ const Cast = () => {
         <CastScrolled>
           <Ol>
             {casts.map(({ id, name, character, profile_path }) => {
-              console.log(profile_path);
               return (
                 <LiCard key={id}>
                   <Img loading="lazy" src={checkImg(profile_path)} alt={name} />

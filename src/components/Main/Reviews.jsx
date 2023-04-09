@@ -1,6 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchRequestForReviewsApi } from '../API/requestForReviewsApi';
+import {
+  ReviewsList,
+  Container,
+  ReviewsItem,
+  Author,
+  AuthorItem,
+  Character,
+} from './Reviews.styled';
 
 /*/ 
 
@@ -42,8 +50,8 @@ const Reviews = () => {
   }, [moviesId]);
 
   return (
-    <>
-      <h3>Cтраница Reviews ✅</h3>
+    <Container>
+      {/* <h3>Cтраница Reviews ✅</h3> */}
       {error && (
         <>
           <div>Ошибка error</div>
@@ -58,18 +66,20 @@ const Reviews = () => {
       {noInformationCasts && <div>Нет информации об Reviews</div>}
 
       {reviews && (
-        <ul>
+        <ReviewsList>
           {reviews.map(({ id, author, content }) => {
             return (
-              <li key={id}>
-                <p>Name: {author}</p>
-                <p>Character: {content}</p>
-              </li>
+              <ReviewsItem key={id}>
+                <Author>
+                  Author: <AuthorItem>{author}</AuthorItem>
+                </Author>
+                <Character>{content}</Character>
+              </ReviewsItem>
             );
           })}
-        </ul>
+        </ReviewsList>
       )}
-    </>
+    </Container>
   );
 };
 

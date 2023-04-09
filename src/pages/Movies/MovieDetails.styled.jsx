@@ -10,7 +10,7 @@ export const BgGradient = styled.div`
   );
 `;
 export const ContainerWrapperBgImage = styled.div`
-  display: flex;
+  /* display: flex; */
   /* padding-top: 10px; */
   /* border: 2px solid rgb(0, 13, 255); */
 
@@ -63,7 +63,6 @@ export const BackLink = styled(NavLink)`
   color: #ffffff;
 `;
 
-/// SectionLink
 export const SectionLink = styled.div`
   padding-top: 10px;
 `;

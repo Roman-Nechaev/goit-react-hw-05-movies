@@ -14,7 +14,7 @@ import {
   BackLink,
   SectionLink,
   UlLink,
-} from './MovieDetails.styles';
+} from './MovieDetails.styled';
 
 /*/ 
 
@@ -59,7 +59,16 @@ const MovieDetails = () => {
 
   const { title, poster_path, overview, genres, vote_average, backdrop_path } =
     items;
+
+  const convertGenres = item => {
+    let stack = [];
+
+    item.map(({ name }) => stack.push(name));
+    return stack.join(', ');
+  };
+
   const voteAverage = Math.ceil(vote_average * 10);
+
   return (
     <div>
       <ContainerWrapperBgImage
@@ -99,10 +108,7 @@ const MovieDetails = () => {
                     <h2>Overview</h2>
                     <p>{overview}</p>
                     <h3>Genres</h3>
-                    {genres &&
-                      genres.map(({ id, name }) => (
-                        <span key={id}>{name} </span>
-                      ))}
+                    {genres && <span>{convertGenres(genres)}</span>}
                   </SectionInfo>
                 </WrapperInfo>
               </ContainerCard>
