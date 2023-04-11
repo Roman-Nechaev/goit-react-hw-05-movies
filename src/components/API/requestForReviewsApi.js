@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { API_KEY } from '../../KEY/movieKey';
 
-export const fetchRequestForReviewsApi = async movie_Id => {
+const fetchRequestForReviewsApi = async movie_Id => {
   const response = await axios.get(
     `https://api.themoviedb.org/3/movie/${movie_Id}/reviews`,
     {
@@ -13,3 +13,5 @@ export const fetchRequestForReviewsApi = async movie_Id => {
 
   return response.data;
 };
+
+export default fetchRequestForReviewsApi;

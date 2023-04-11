@@ -6,6 +6,7 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.h1`
+  padding-top: 10px;
   margin: 0;
 
   padding-bottom: 10px;

@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
+import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { NavLink } from 'react-router-dom';
 
 export const BgGradient = styled.div`
+  padding-top: 15px;
   background-image: linear-gradient(
     to right,
     rgba(52.5, 52.5, 73.5, 1) calc((50vw - 170px) - 340px),
@@ -10,8 +12,6 @@ export const BgGradient = styled.div`
   );
 `;
 export const ContainerWrapperBgImage = styled.div`
-  /* display: flex; */
-  /* padding-top: 10px; */
   /* border: 2px solid rgb(0, 13, 255); */
 
   border-bottom: 1px solid rgb(67, 67, 67);
@@ -58,13 +58,9 @@ export const Img = styled.img`
   display: block;
 `;
 
-export const BackLink = styled(NavLink)`
-  text-decoration: none;
-  color: #ffffff;
-`;
-
 export const SectionLink = styled.div`
   padding-top: 10px;
+  padding-bottom: 20px;
 `;
 
 export const UlLink = styled.ul`
@@ -139,4 +135,30 @@ export const LinkSt = styled(NavLink)`
       background: #b1dae7;
     }
   }
+`;
+
+export const BackLink = styled(NavLink)`
+  text-decoration: none;
+  color: #ffffff;
+  margin-left: 25px;
+  border: 2px solid rgb(255, 255, 255);
+  padding: 5px;
+  display: inline-flex;
+  border-radius: 8px;
+  transition: all 0.4s ease;
+
+  :hover {
+    color: #234567;
+    border: 2px solid #b1dae7;
+    background-color: #b1dae7;
+  }
+  :hover svg {
+    transform: scale(1.2);
+  }
+`;
+
+export const AiOutlineArrowLeftSt = styled(AiOutlineArrowLeft)`
+  padding-right: 8px;
+  width: 18px;
+  height: 18px;
 `;

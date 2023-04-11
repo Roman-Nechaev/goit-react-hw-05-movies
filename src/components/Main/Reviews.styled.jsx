@@ -5,6 +5,7 @@ export const Container = styled.div`
 
   margin: 0 auto;
   margin-top: 50px;
+
   padding-right: 20px;
   padding-left: 20px;
 
@@ -47,4 +48,14 @@ export const Character = styled.p`
   font-style: oblique;
   padding: 8px;
   font-weight: bold;
+`;
+
+export const NoReviews = styled.p`
+  padding-top: 25px;
+  color: #4e4e4e;
+  font-size: 30px;
+  line-height: 26px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-align: center;
 `;

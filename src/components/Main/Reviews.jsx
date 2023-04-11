@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchRequestForReviewsApi } from '../API/requestForReviewsApi';
+import fetchRequestForReviewsApi from '../API/requestForReviewsApi';
+
+import PageNotFound from 'components/Error/PageNotFound';
+import SpinnersLoader from 'components/Loading/SpinnersLoader';
+
 import {
   ReviewsList,
   Container,
@@ -8,15 +12,9 @@ import {
   Author,
   AuthorItem,
   Character,
+  NoReviews,
 } from './Reviews.styled';
 
-/*/ 
-
-
-
-стили
-
-/*/
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -35,7 +33,6 @@ const Reviews = () => {
         const { results } = await fetchRequestForReviewsApi(moviesId);
 
         if (results.length === 0) {
-          console.log('Нет информации об Reviews');
           setNoInformationCasts(true);
         }
         setReviews(results);
@@ -51,19 +48,10 @@ const Reviews = () => {
 
   return (
     <Container>
-      {/* <h3>Cтраница Reviews ✅</h3> */}
-      {error && (
-        <>
-          <div>Ошибка error</div>
-        </>
-      )}
-      {isLoading && (
-        <>
-          <div>Загружаем информацию об Reviews isLoading</div>
-        </>
-      )}
+      {error && <PageNotFound />}
+      {isLoading && <SpinnersLoader />}
 
-      {noInformationCasts && <div>Нет информации об Reviews</div>}
+      {noInformationCasts && <NoReviews>Sorry, no reviews yet!</NoReviews>}
 
       {reviews && (
         <ReviewsList>

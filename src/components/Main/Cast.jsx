@@ -1,26 +1,21 @@
 import { useEffect, useState } from 'react';
-import { fetchRequestForActorsApi } from '../API/requestForActorsApi';
 import { useParams } from 'react-router-dom';
+
+import fetchRequestForActorsApi from '../API/requestForActorsApi';
+import PageNotFound from 'components/Error/PageNotFound';
+import SpinnersLoader from 'components/Loading/SpinnersLoader';
+import checkPosters from 'components/Utils/checkPosters';
+
 import {
   CastScrolled,
   Character,
   Img,
   LiCard,
   Name,
+  NoCast,
   Ol,
   TitleCast,
 } from './Cast.styled';
-
-import defaultPhoto from '../Img/no-photo.png';
-
-/*/ 
-
- Поставить заглуши на изображения есть его нет
-
-
-стили
-
-/*/
 
 const Cast = () => {
   const [casts, setCasts] = useState([]);
@@ -40,7 +35,6 @@ const Cast = () => {
         const { cast } = await fetchRequestForActorsApi(moviesId);
 
         if (cast.length === 0) {
-          console.log('Нет информации об актерах');
           setNoInformationCasts(true);
         }
         setCasts(cast);
@@ -54,28 +48,13 @@ const Cast = () => {
     fetchData();
   }, [moviesId]);
 
-  const checkImg = img => {
-    if (!img) {
-      return defaultPhoto;
-    }
-    return `https://image.tmdb.org/t/p/w500${img}`;
-  };
-
   return (
     <section>
       <TitleCast> Billed Cast</TitleCast>
-      {error && (
-        <>
-          <div>Ошибка error</div>
-        </>
-      )}
-      {isLoading && (
-        <>
-          <div>Загружаем информацию об актерах isLoading</div>
-        </>
-      )}
+      {error && <PageNotFound />}
+      {isLoading && <SpinnersLoader />}
 
-      {noInformationCasts && <div>Нет информации об актерах</div>}
+      {noInformationCasts && <NoCast>Sorry, no cast information yet!</NoCast>}
 
       {casts && (
         <CastScrolled>
@@ -83,7 +62,11 @@ const Cast = () => {
             {casts.map(({ id, name, character, profile_path }) => {
               return (
                 <LiCard key={id}>
-                  <Img loading="lazy" src={checkImg(profile_path)} alt={name} />
+                  <Img
+                    loading="lazy"
+                    src={checkPosters(profile_path)}
+                    alt={name}
+                  />
                   <Name>{name}</Name>
                   <Character>{character}</Character>
                 </LiCard>

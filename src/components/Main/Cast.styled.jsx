@@ -82,3 +82,13 @@ export const Character = styled.p`
   color: #4e4e4e;
   padding-left: 8px;
 `;
+
+export const NoCast = styled.p`
+  padding-top: 10px;
+  color: #4e4e4e;
+  font-size: 30px;
+  line-height: 26px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-align: center;
+`;

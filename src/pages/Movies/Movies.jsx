@@ -1,30 +1,20 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-
 import { Formik } from 'formik';
 
-import { fetchSearchMovies } from 'components/API/searchMoviesApi';
+import fetchSearchMovies from 'components/API/searchMoviesApi';
 import SearchMoviesItems from '../../components/Main/SearchMoviesItems';
-import {
-  Button,
-  Container,
-  ContainerForm,
-  FormsSt,
-  Input,
-} from './Movies.styled';
+import FadingLoader from 'components/Loading/FadingLoaderCard';
+import errorEmptyInput from 'components/Error/errorEmptyInput';
+import badRequestFromUser from 'components/Error/badRequestFromUser';
+import PageNotFound from 'components/Error/PageNotFound';
 
-/*/ 
-
- Поставить заглуши если нет информации 
- пустой запрос 
-стили
-
-/*/
+import { Button, ContainerForm, FormsSt, Input } from './Movies.styled';
 
 const Movies = () => {
   const [queryResult, setQueryResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -32,13 +22,12 @@ const Movies = () => {
 
   const handleSubmit = ({ values }, actions) => {
     if (values.trim() === '') {
-      console.log('поле ввода не должно быть пустым ');
-
-      return setSearchParams({});
+      errorEmptyInput();
+      return;
     }
 
     setSearchParams({ query: values });
-    // actions.setSubmitting(false);
+    actions.setSubmitting(false);
   };
 
   useEffect(() => {
@@ -51,9 +40,11 @@ const Movies = () => {
         setIsLoading(true);
 
         const { results } = await fetchSearchMovies(queryMovies);
-        console.log(results);
+
         if (results.length === 0) {
-          console.log(`по вашему запросу ${queryMovies} ничего не нашли`);
+          setError(badRequestFromUser(queryMovies));
+
+          return;
         }
         setQueryResult(results);
       } catch {
@@ -64,10 +55,10 @@ const Movies = () => {
     };
 
     fetchData();
-  }, [queryMovies]);
+  }, [queryMovies, setSearchParams]);
 
   return (
-    <div>
+    <>
       <ContainerForm>
         <Formik initialValues={{ values: queryMovies }} onSubmit={handleSubmit}>
           <FormsSt>
@@ -82,20 +73,12 @@ const Movies = () => {
           </FormsSt>
         </Formik>
       </ContainerForm>
-      {isLoading && (
-        <>
-          <div>Загружаем список фильмов isLoading</div>
-        </>
-      )}
-      {error && (
-        <>
-          <div>Ошибка error</div>
-        </>
-      )}
-      {queryResult && !isLoading && (
+      {isLoading && <FadingLoader />}
+      {error && <PageNotFound />}
+      {!error && !isLoading && queryResult && (
         <SearchMoviesItems queryResultItems={queryResult} />
       )}
-    </div>
+    </>
   );
 };
 

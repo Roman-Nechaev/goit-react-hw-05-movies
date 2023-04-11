@@ -5,7 +5,7 @@ export const FormsSt = styled(Form)`
   display: flex;
   align-items: center;
   width: 100%;
-  /* max-width: 300px; */
+  max-width: 600px;
 
   border-radius: 20px;
   overflow: hidden;
@@ -15,6 +15,7 @@ export const FormsSt = styled(Form)`
 
 export const Input = styled(Field)`
   display: inline-block;
+
   width: 100%;
   font: inherit;
   font-size: 20px;

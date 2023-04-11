@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { fetchPopularMovies } from '../../components/API/popularMoviesApi';
+import fetchPopularMovies from '../../components/API/popularMoviesApi';
+import PageNotFound from 'components/Error/PageNotFound';
+import FadingLoader from 'components/Loading/FadingLoaderCard';
+import checkPoster from 'components/Utils/checkPoster';
+import formattingOverview from 'components/Utils/formattingOverview';
+
 import {
   ContentWrapper,
   ImgCards,
@@ -29,7 +34,7 @@ const Home = () => {
       try {
         setIsLoading(true);
         const { results } = await fetchPopularMovies();
-        console.log(results);
+
         setPopularMovies(results);
       } catch {
         setError(true);
@@ -41,56 +46,43 @@ const Home = () => {
     fetchData();
   }, []);
 
-  function formattingOverview(text) {
-    let newFormat = text;
-    if (newFormat.length > 80) {
-      newFormat = text.slice(0, 90) + '...';
-    }
-    return newFormat;
-  }
-
   return (
     <Container>
-      <Title>Trending today</Title>
-      <ContentWrapper>
-        {isLoading && (
-          <>
-            <div>Загружаем список фильмов isLoading</div>
-          </>
-        )}
-        {error && (
-          <>
-            <div>Ошибка error</div>
-          </>
-        )}
-
-        <Ul>
-          {popularMovies.map(
-            ({ id, title, poster_path, overview, release_date }) => {
-              return (
-                <Li key={id}>
-                  <LinkSt to={`/movies/${id}`} state={{ from: location }}>
-                    <ImgWrapper>
-                      <ImgCards
-                        loading="lazy"
-                        src={`https://image.tmdb.org/t/p/w500${poster_path}`}
-                        alt={title}
-                      />
-                    </ImgWrapper>
-                    <TitleWrapper>
-                      <TitleCards>{title}</TitleCards>
-                      <Release>{release_date}</Release>
-                      <OverviewCards>
-                        {formattingOverview(overview)}
-                      </OverviewCards>
-                    </TitleWrapper>
-                  </LinkSt>
-                </Li>
-              );
-            }
+      {error && <PageNotFound />}
+      {!error && <Title>Trending today</Title>}
+      {!error && (
+        <ContentWrapper>
+          {isLoading && <FadingLoader />}
+          {!isLoading && (
+            <Ul>
+              {popularMovies.map(
+                ({ id, title, poster_path, overview, release_date }) => {
+                  return (
+                    <Li key={id}>
+                      <LinkSt to={`/movies/${id}`} state={{ from: location }}>
+                        <ImgWrapper>
+                          <ImgCards
+                            loading="lazy"
+                            src={checkPoster(poster_path)}
+                            alt={title}
+                          />
+                        </ImgWrapper>
+                        <TitleWrapper>
+                          <TitleCards>{title}</TitleCards>
+                          <Release>{release_date}</Release>
+                          <OverviewCards>
+                            {formattingOverview(overview)}
+                          </OverviewCards>
+                        </TitleWrapper>
+                      </LinkSt>
+                    </Li>
+                  );
+                }
+              )}
+            </Ul>
           )}
-        </Ul>
-      </ContentWrapper>
+        </ContentWrapper>
+      )}
     </Container>
   );
 };

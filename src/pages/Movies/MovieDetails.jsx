@@ -1,7 +1,14 @@
 import { useRef, Suspense, useEffect, useState } from 'react';
 import { Outlet, useLocation, useParams } from 'react-router-dom';
 
-import { fetchCompleteInformationAboutFilmApi } from 'components/API/completeInformationAboutFilmApi';
+import fetchCompleteInformationAboutFilmApi from 'components/API/completeInformationAboutFilmApi';
+
+import checkPoster from 'components/Utils/checkPoster';
+import PageNotFound from 'components/Error/PageNotFound';
+import SpinnersLoader from 'components/Loading/SpinnersLoader';
+import LoaderMovieDetails from 'components/Loading/LoaderMovieDetails';
+import convertGenres from 'components/Utils/convertGenres';
+
 import {
   ContainerWrapperBgImage,
   ContainerCard,
@@ -14,16 +21,8 @@ import {
   BackLink,
   SectionLink,
   UlLink,
+  AiOutlineArrowLeftSt,
 } from './MovieDetails.styled';
-
-/*/ 
-
- Поставить заглуши на изображения есть его нет
-
-
- Cтили
-
-/*/
 
 const MovieDetails = () => {
   const [items, setItems] = useState([]);
@@ -60,13 +59,6 @@ const MovieDetails = () => {
   const { title, poster_path, overview, genres, vote_average, backdrop_path } =
     items;
 
-  const convertGenres = item => {
-    let stack = [];
-
-    item.map(({ name }) => stack.push(name));
-    return stack.join(', ');
-  };
-
   const voteAverage = Math.ceil(vote_average * 10);
 
   return (
@@ -75,28 +67,21 @@ const MovieDetails = () => {
         img={`https://image.tmdb.org/t/p/original/${backdrop_path}`}
       >
         <BgGradient>
-          <BackLink to={beckLinkLocationRef.current}>
-            Назад к странице коллекции
-          </BackLink>
+          {error && <PageNotFound />}
 
-          {error && (
-            <>
-              <div>Ошибка error</div>
-            </>
-          )}
-          {isLoading && (
-            <>
-              <div>Загружаем информацию о фильме isLoading</div>
-            </>
-          )}
+          {isLoading && <LoaderMovieDetails />}
 
           {!error && !isLoading && (
             <>
+              <BackLink to={beckLinkLocationRef.current}>
+                <AiOutlineArrowLeftSt />
+                <span>Go back</span>
+              </BackLink>
               <ContainerCard>
                 <ImgWrapper>
                   <Img
                     loading="lazy"
-                    src={`https://image.tmdb.org/t/p/w500${poster_path}`}
+                    src={checkPoster(poster_path)}
                     alt={title}
                   />
                 </ImgWrapper>
@@ -116,33 +101,36 @@ const MovieDetails = () => {
           )}
         </BgGradient>
       </ContainerWrapperBgImage>
-      <SectionLink>
-        <nav>
-          <UlLink>
-            <li>
-              <LinkSt to="cast">
-                <span>Cast</span>
-                <svg viewBox="0 0 13 10" height="10px" width="15px">
-                  <path d="M1,5 L11,5"></path>
-                  <polyline points="8 1 12 5 8 9"></polyline>
-                </svg>
-              </LinkSt>
-            </li>
-            <li>
-              <LinkSt to="reviews">
-                <span>Reviews</span>
-                <svg viewBox="0 0 13 10" height="10px" width="15px">
-                  <path d="M1,5 L11,5"></path>
-                  <polyline points="8 1 12 5 8 9"></polyline>
-                </svg>
-              </LinkSt>
-            </li>
-          </UlLink>
-        </nav>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Outlet />
-        </Suspense>
-      </SectionLink>
+      {!error && (
+        <SectionLink>
+          <nav>
+            <UlLink>
+              <li>
+                <LinkSt to="cast">
+                  <span>Cast</span>
+                  <svg viewBox="0 0 13 10" height="10px" width="15px">
+                    <path d="M1,5 L11,5"></path>
+                    <polyline points="8 1 12 5 8 9"></polyline>
+                  </svg>
+                </LinkSt>
+              </li>
+              <li>
+                <LinkSt to="reviews">
+                  <span>Reviews</span>
+                  <svg viewBox="0 0 13 10" height="10px" width="15px">
+                    <path d="M1,5 L11,5"></path>
+                    <polyline points="8 1 12 5 8 9"></polyline>
+                  </svg>
+                </LinkSt>
+              </li>
+            </UlLink>
+          </nav>
+
+          <Suspense fallback={<SpinnersLoader />}>
+            <Outlet />
+          </Suspense>
+        </SectionLink>
+      )}
     </div>
   );
 };

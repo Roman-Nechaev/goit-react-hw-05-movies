@@ -1,6 +1,9 @@
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 
+import LogoIcons from '../Icons/pngaaa.com-2988926.png';
+import SpinnersLoader from 'components/Loading/SpinnersLoader';
+
 import {
   Container,
   SectionHeader,
@@ -10,8 +13,11 @@ import {
   Logo,
   SpanLogo,
   SectionMain,
+  WrapperLinkNav,
+  SectionFooter,
+  SpanLogoFooter,
 } from './Layout.styled';
-import LogoIcons from '../Icons/pngegg.png';
+import Footer from 'components/Footer/Footer';
 
 const Layout = () => {
   return (
@@ -23,21 +29,25 @@ const Layout = () => {
               <SpanLogo src={LogoIcons} alt="Logo Icons" />
             </LinkLogo>
           </Logo>
-          <nav>
+          <WrapperLinkNav>
             <Link to="/">Home</Link>
             <Link to="movies">Movies</Link>
-          </nav>
-          {/* <>
-            <Link to="/">Sign in</Link>
-          </> */}
+          </WrapperLinkNav>
         </Header>
       </SectionHeader>
       <SectionMain>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<SpinnersLoader />}>
           <Outlet />
         </Suspense>
       </SectionMain>
-      <footer></footer>
+      <SectionFooter>
+        <Logo>
+          <LinkLogo to="/">
+            <SpanLogoFooter src={LogoIcons} alt="Logo Icons" />
+          </LinkLogo>
+        </Logo>
+        <Footer />
+      </SectionFooter>
     </Container>
   );
 };

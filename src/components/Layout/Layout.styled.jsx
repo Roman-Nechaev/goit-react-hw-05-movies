@@ -5,12 +5,13 @@ import { NavLink } from 'react-router-dom';
 export const Container = styled.div`
   margin-left: auto;
   margin-right: auto;
-  /* padding: 0 15px; */
 `;
 export const SectionHeader = styled.div`
   /* max-width: 1024px; */
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 50px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   background-color: #042541;
 `;
 
@@ -24,7 +25,10 @@ export const Header = styled.header`
 
 export const Logo = styled.p`
   margin: 0;
-  justify-items: baseline;
+`;
+
+export const WrapperLinkNav = styled.nav`
+  margin-right: 70px;
 `;
 
 export const Link = styled(NavLink)`
@@ -35,25 +39,23 @@ export const Link = styled(NavLink)`
   color: white;
   font-weight: 500;
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1) 0s;
-  &.active {
-    color: white;
-    background-color: #0062ff;
-  }
+
   :hover,
   :focus {
     background-color: #00b3ff5a;
   }
+  &.active {
+    color: white;
+    background-color: #0062ff;
+  }
 `;
 
 export const SpanLogo = styled.img`
-  width: 80px;
-  height: 90px;
-
-  fill: #ffffff;
+  /* width: 80px; */
+  height: 70px;
 `;
 
 export const LinkLogo = styled(NavLink)`
-  /* cursor: pointer; */
   :hover,
   :focus {
     cursor: pointer;
@@ -61,11 +63,22 @@ export const LinkLogo = styled(NavLink)`
 `;
 
 export const SectionMain = styled.main`
-  /* border-bottom: 2px solid rgba(82, 82, 82, 0.376); */
-  /* max-width: 1024px; */
-  margin: 0 auto;
-  /* padding: 0 20px; */
-  /* padding-top: 15px; */
+  /* margin: 0 auto; */
+  /* padding: 0 50px; */
 
-  /* background-color: #042541; */
+  min-height: calc(100vh - 70px);
+`;
+
+export const SectionFooter = styled.footer`
+  padding: 15px 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #042541;
+  /* background-color: #504d67; */
+`;
+
+export const SpanLogoFooter = styled.img`
+  height: 50px;
 `;
