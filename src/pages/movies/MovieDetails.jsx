@@ -3,11 +3,11 @@ import { Outlet, useLocation, useParams, useNavigate } from 'react-router-dom';
 
 import fetchCompleteInformationAboutFilmApi from 'components/API/completeInformationAboutFilmApi';
 
-import checkPoster from 'components/utilsr/checkPoster';
+import checkPoster from 'components/utils/checkPoster';
 
-import SpinnersLoader from 'components/loadingr/SpinnersLoader';
-import LoaderMovieDetails from 'components/loadingr/LoaderMovieDetails';
-import convertGenres from 'components/utilsr/convertGenres';
+import SpinnersLoader from 'components/loading/SpinnersLoader';
+import LoaderMovieDetails from 'components/loading/LoaderMovieDetails';
+import convertGenres from 'components/utils/convertGenres';
 
 import {
   ContainerWrapperBgImage,

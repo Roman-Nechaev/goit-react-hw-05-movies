@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import fetchPopularMovies from '../../components/API/popularMoviesApi';
-import FadingLoader from 'components/loadingr/FadingLoaderCard';
+import FadingLoader from 'components/loading/FadingLoaderCard';
 
-import checkPoster from 'components/utilsr/checkPoster';
-import formattingOverview from 'components/utilsr/formattingOverview';
+import checkPoster from 'components/utils/checkPoster';
+import formattingOverview from 'components/utils/formattingOverview';
 
 import {
   ContentWrapper,
