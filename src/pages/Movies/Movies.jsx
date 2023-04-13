@@ -3,10 +3,12 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 
 import fetchSearchMovies from 'components/API/searchMoviesApi';
+
 import SearchMoviesItems from '../../components/main/SearchMoviesItems';
 import FadingLoader from 'components/loading/FadingLoaderCard';
-import errorEmptyInput from 'components/error/errorEmptyInput';
+
 import badRequestFromUser from 'components/error/badRequestFromUser';
+import errorEmptyInput from 'components/error/errorEmptyInput';
 
 import { Button, ContainerForm, FormsSt, Input } from './Movies.styled';
 
