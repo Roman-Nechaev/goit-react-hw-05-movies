@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import fetchRequestForActorsApi from '../API/requestForActorsApi';
-import PageNotFound from 'components/error/PageNotFound';
-import SpinnersLoader from 'components/loading/SpinnersLoader';
-import checkPosters from 'components/utils/checkPosters';
+import PageNotFound from 'components/errorr/PageNotFound';
+import SpinnersLoader from 'components/loadingr/SpinnersLoader';
+import checkPosters from 'components/utilsr/checkPosters';
 
 import {
   CastScrolled,
