@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import fetchRequestForReviewsApi from '../API/requestForReviewsApi';
 
 import PageNotFound from 'components/error/PageNotFound';
@@ -21,6 +21,7 @@ const Reviews = () => {
   const [noInformationCasts, setNoInformationCasts] = useState(false);
   const [error, setError] = useState(false);
   const { moviesId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!moviesId) {
@@ -38,17 +39,18 @@ const Reviews = () => {
         setReviews(results);
       } catch (error) {
         setError(true);
+        navigate('/error', { replace: true });
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchData();
-  }, [moviesId]);
+  }, [moviesId, navigate]);
 
   return (
     <Container>
-      {error && <PageNotFound />}
+      {/* {error && <PageNotFound />} */}
       {isLoading && <SpinnersLoader />}
 
       {noInformationCasts && <NoReviews>Sorry, no reviews yet!</NoReviews>}
