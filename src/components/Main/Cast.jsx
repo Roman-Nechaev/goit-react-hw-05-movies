@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import fetchRequestForActorsApi from '../API/requestForActorsApi';
-
+import PageNotFound from 'components/error/PageNotFound';
 import SpinnersLoader from 'components/loading/SpinnersLoader';
 import checkPosters from 'components/utils/checkPosters';
 
@@ -23,7 +23,6 @@ const Cast = () => {
   const [error, setError] = useState(false);
   const [noInformationCasts, setNoInformationCasts] = useState(false);
   const { moviesId } = useParams();
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (!moviesId) {
@@ -41,19 +40,18 @@ const Cast = () => {
         setCasts(cast);
       } catch (error) {
         setError(true);
-        navigate('/error', { replace: true });
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchData();
-  }, [moviesId, navigate]);
+  }, [moviesId]);
 
   return (
     <section>
       <TitleCast> Billed Cast</TitleCast>
-
+      {error && <PageNotFound />}
       {isLoading && <SpinnersLoader />}
 
       {noInformationCasts && <NoCast>Sorry, no cast information yet!</NoCast>}
