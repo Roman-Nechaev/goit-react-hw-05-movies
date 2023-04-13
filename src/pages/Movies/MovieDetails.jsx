@@ -1,13 +1,13 @@
 import { useRef, Suspense, useEffect, useState } from 'react';
-import { Outlet, useLocation, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useParams, useNavigate } from 'react-router-dom';
 
 import fetchCompleteInformationAboutFilmApi from 'components/API/completeInformationAboutFilmApi';
 
-import checkPoster from 'components/Utils/checkPoster';
-import PageNotFound from 'components/Error/PageNotFound';
-import SpinnersLoader from 'components/Loading/SpinnersLoader';
-import LoaderMovieDetails from 'components/Loading/LoaderMovieDetails';
-import convertGenres from 'components/Utils/convertGenres';
+import checkPoster from 'components/utils/checkPoster';
+
+import SpinnersLoader from 'components/loading/SpinnersLoader';
+import LoaderMovieDetails from 'components/loading/LoaderMovieDetails';
+import convertGenres from 'components/utils/convertGenres';
 
 import {
   ContainerWrapperBgImage,
@@ -30,6 +30,7 @@ const MovieDetails = () => {
   const [error, setError] = useState(false);
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   const beckLinkLocationRef = useRef(location.state?.from ?? '/movies');
 
@@ -48,13 +49,14 @@ const MovieDetails = () => {
         setItems(response);
       } catch (error) {
         setError(true);
+        navigate('/error', { replace: true });
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchData();
-  }, [moviesId]);
+  }, [moviesId, navigate]);
 
   const { title, poster_path, overview, genres, vote_average, backdrop_path } =
     items;
@@ -67,8 +69,6 @@ const MovieDetails = () => {
         img={`https://image.tmdb.org/t/p/original/${backdrop_path}`}
       >
         <BgGradient>
-          {error && <PageNotFound />}
-
           {isLoading && <LoaderMovieDetails />}
 
           {!error && !isLoading && (

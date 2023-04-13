@@ -1,8 +1,8 @@
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import LogoIcons from '../Icons/pngaaa.com-2988926.png';
-import SpinnersLoader from 'components/Loading/SpinnersLoader';
+import LogoIcons from '../icons/logo.png';
+import SpinnersLoader from 'components/loading/SpinnersLoader';
 
 import {
   Container,
@@ -17,7 +17,7 @@ import {
   SectionFooter,
   SpanLogoFooter,
 } from './Layout.styled';
-import Footer from 'components/Footer/Footer';
+import Footer from 'components/footer/Footer';
 
 const Layout = () => {
   return (

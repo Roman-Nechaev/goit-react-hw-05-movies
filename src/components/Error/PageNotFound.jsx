@@ -1,4 +1,4 @@
-import notFound from '../Img/pngwing.com (1).png';
+import notFound from '../img/not-found.png';
 import { ImageError, Wrapper } from './PageNotFound.styled';
 
 const PageNotFound = () => {

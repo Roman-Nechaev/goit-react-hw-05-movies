@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 
 import fetchSearchMovies from 'components/API/searchMoviesApi';
-import SearchMoviesItems from '../../components/Main/SearchMoviesItems';
-import FadingLoader from 'components/Loading/FadingLoaderCard';
-import errorEmptyInput from 'components/Error/errorEmptyInput';
-import badRequestFromUser from 'components/Error/badRequestFromUser';
-import PageNotFound from 'components/Error/PageNotFound';
+import SearchMoviesItems from '../../components/main/SearchMoviesItems';
+import FadingLoader from 'components/loading/FadingLoaderCard';
+import errorEmptyInput from 'components/error/errorEmptyInput';
+import badRequestFromUser from 'components/error/badRequestFromUser';
 
 import { Button, ContainerForm, FormsSt, Input } from './Movies.styled';
 
@@ -17,6 +16,7 @@ const Movies = () => {
   const [error, setError] = useState(null);
 
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const queryMovies = searchParams.get('query') ?? '';
 
@@ -49,13 +49,14 @@ const Movies = () => {
         setQueryResult(results);
       } catch {
         setError(true);
+        navigate('/error', { replace: true });
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchData();
-  }, [queryMovies, setSearchParams]);
+  }, [navigate, queryMovies, setSearchParams]);
 
   return (
     <>
@@ -74,7 +75,7 @@ const Movies = () => {
         </Formik>
       </ContainerForm>
       {isLoading && <FadingLoader />}
-      {error && <PageNotFound />}
+
       {!error && !isLoading && queryResult && (
         <SearchMoviesItems queryResultItems={queryResult} />
       )}

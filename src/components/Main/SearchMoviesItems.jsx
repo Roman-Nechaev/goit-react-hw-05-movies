@@ -1,8 +1,8 @@
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import checkPoster from 'components/Utils/checkPoster';
-import formattingOverview from 'components/Utils/formattingOverview';
+import checkPoster from 'components/utils/checkPoster';
+import formattingOverview from 'components/utils/formattingOverview';
 
 import {
   ContentWrapper,

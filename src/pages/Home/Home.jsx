@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import fetchPopularMovies from '../../components/API/popularMoviesApi';
-import PageNotFound from 'components/Error/PageNotFound';
-import FadingLoader from 'components/Loading/FadingLoaderCard';
-import checkPoster from 'components/Utils/checkPoster';
-import formattingOverview from 'components/Utils/formattingOverview';
+import FadingLoader from 'components/loading/FadingLoaderCard';
+import checkPoster from 'components/utils/checkPoster';
+import formattingOverview from 'components/utils/formattingOverview';
 
 import {
   ContentWrapper,
@@ -28,6 +27,7 @@ const Home = () => {
   const [error, setError] = useState(false);
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,17 +38,17 @@ const Home = () => {
         setPopularMovies(results);
       } catch {
         setError(true);
+        navigate('/error', { replace: true });
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchData();
-  }, []);
+  }, [navigate]);
 
   return (
     <Container>
-      {error && <PageNotFound />}
       {!error && <Title>Trending today</Title>}
       {!error && (
         <ContentWrapper>
