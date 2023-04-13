@@ -11,13 +11,14 @@ const Cast = lazy(() => import('./main/Cast'));
 const Reviews = lazy(() => import('./main/Reviews'));
 const Layout = lazy(() => import('./layout/Layout'));
 
-// const PageNotFound = lazy(() => import('../components/error/PageNotFound'));
+const PageNotFound = lazy(() => import('../components/error/PageNotFound'));
 
 export const App = () => {
   return (
     <div>
       <Routes>
         <Route path="/" element={<Layout />}>
+          <Route path="error" element={<PageNotFound />} />
           <Route index element={<Home />} />
           <Route path="movies" element={<Movies />} />
           <Route path="movies/:moviesId" element={<MovieDetails />}>
