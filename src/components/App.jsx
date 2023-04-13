@@ -1,6 +1,7 @@
 import { lazy } from 'react';
 
 import { Route, Routes } from 'react-router-dom';
+
 import PageNotFound from './error/PageNotFound';
 
 const Home = lazy(() => import('../pages/home/Home'));
